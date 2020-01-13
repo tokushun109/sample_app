@@ -91,4 +91,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # strong_paramaterでadminは許可していないため、相変わらずfalseを返す
     assert_not @other_user.reload.admin?
   end
+
+  test "should redirect destroy when not logged in" do
+    # @userのdeleteリクエストを送った時にuserの数に変化がないこと
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    # ログイン画面にリダイレクトすること
+    assert_redirected_to login_url
+  end
+
+  test "should redirect destroy when logged in as non-admin" do
+    # 管理者権限のない@other_userとしてログインして
+    log_in_as(@other_user)
+    # @userのdeleteリクエストを送った時にuserの数に変化がないこと
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    # ログイン画面にリダイレクトすること
+    assert_redirected_to root_url
+  end
 end
