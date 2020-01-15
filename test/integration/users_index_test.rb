@@ -18,11 +18,12 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     # divクラスのpaginationクラスがあることを確認
     assert_select 'div.pagination'
     # 1ページ目に表示されるuserをfist_page_of_usersにまとめる
-    fist_page_of_users = User.paginate(page: 1)
+    first_page_of_users = User.where(activated: true).paginate(page: 1)
     # pageは1ページ（30人分）表示されていて、全てuser.nameのテキスト部分がuser/showの
     # リンクにつながっている
-    fist_page_of_users.each do |user|
+    first_page_of_users.each do |user|
       assert_select 'a[href=?]', user_path(user), text: user.name
+      assert user.activated?
       # 表示されているuserが管理者である自分でなければ、
       unless user == @admin
         # deleteというテキストでリンクが表示される
