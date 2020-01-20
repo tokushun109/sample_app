@@ -1,0 +1,8 @@
+<% if @feed_items.any? %>
+  <ol class="microposts">
+    <%# 組み込まれるのはhomeビューでhomeアクションには@feed_itemsという配列がある %>
+    <%# 中身はmicropostsの為、_micropost.html.erbを呼び出した%>
+    <%= render @feed_items %>
+  </ol>
+  <%= will_paginate @feed_items %>
+<% end %>

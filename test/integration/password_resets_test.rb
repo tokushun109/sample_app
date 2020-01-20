@@ -89,6 +89,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
   end
 
   test "expired token" do
+
     get new_password_reset_path
     post password_resets_path,
          params: { password_reset: { email: @user.email } }
