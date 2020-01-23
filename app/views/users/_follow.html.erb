@@ -1,0 +1,6 @@
+<%# form_forのモデル指定でrelationshipsのnewアクションに近いものを渡したい %>
+<%= form_for(current_user.active_relationships.build, remote: true) do |f| %>
+<%# 隠しタグでフォローする@user.idもparams[:follow_id]送る %>
+  <div><%= hidden_field_tag :followed_id, @user.id %></div>
+  <%= f.submit "Follow", class: "btn btn-primary" %>
+<% end %>

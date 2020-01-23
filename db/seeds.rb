@@ -1,11 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
+# ユーザー
 User.create!(name:  "Example User",
              email: "example@railstutorial.org",
              password:              "foobar",
@@ -25,6 +18,7 @@ User.create!(name:  "Example User",
         activated_at: Time.zone.now)
 end
 
+# マイクロポスト
 # usersの中から生成した順に6人の配列を作成する
 users = User.order(:created_at).take(6)
 50.times do
@@ -33,3 +27,11 @@ users = User.order(:created_at).take(6)
     user.microposts.create!(content: content)
   end
 end
+
+# リレーションシップ
+users = User.all
+user = users.first
+following = users[2..50]
+followers = users[3..40]
+following.each {|followed| user.follow(followed)}
+followers.each {|follower| follower.follow(user)}
