@@ -55,7 +55,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def get_user
-    # hidden_fieldのparams[:email]の値を受け取って、userを特定
+    #リンクに載っているparams[:email]とhidden_fieldのparams[:email]の値を受け取って、userを特定
     # editでもupdateでも使えるようにどちらもparams[:email]に入れる
     @user = User.find_by(email: params[:email])
   end
